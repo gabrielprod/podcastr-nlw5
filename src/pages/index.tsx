@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString'
 
 import styles from './home.module.scss'
+import { useContext } from 'react'
+import { PlayerContext } from '../context/PlayerContext'
 
 
 interface Episode {
@@ -26,6 +28,8 @@ interface HomeProps {
 }
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  const { play } = useContext(PlayerContext)
+
   return (
     <div className={styles.homePage}>
       <section className={styles.latestEpisodes}>
@@ -46,9 +50,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 </div>
 
                 <button type="button">
-                  <img src="/play-green.svg" alt="Tocar Ep"/>
+                  <img src="/play-green.svg" alt="Tocar Ep" onClick={() => {play(episode)}}/>
                 </button>
-              </li>
+              </li> 
             )
           })}
         </ul>

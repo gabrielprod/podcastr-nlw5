@@ -9,6 +9,17 @@
     }
 }
 
+.homePage::-webkit-scrollbar {
+    width: 7px;
+}
+
+.homePage::-webkit-scrollbar-thumb {
+    background: var(--green-500);
+    border-radius: 15px;
+    margin-right: 2px;
+}
+
+
 .latestEpisodes {
     ul {
         list-style: none;
