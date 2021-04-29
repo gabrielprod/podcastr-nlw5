@@ -6,6 +6,10 @@ import Image from 'next/image'
 import styles from './episode.module.scss'
 import { api } from '../../../services/api'
 import { convertDurationToTimeString } from '../../../utils/convertDurationToTimeString'
+import {usePlayer} from '../../context/PlayerContext'
+import { PlayerContextProvider } from '../../context/PlayerContext'
+import Head from 'next/head'
+
 
 interface Episode {
   id: string
@@ -24,8 +28,13 @@ interface EpisodeProps {
 }
 
 export default function Episode({episode}: EpisodeProps){
+  const { play } = usePlayer()
+
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>{episode.title} | podcastr</title>
+      </Head>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
@@ -33,7 +42,7 @@ export default function Episode({episode}: EpisodeProps){
           </button>
         </Link>
         <Image width={760} height={160} src={episode.thumbnail} objectFit="cover"/>
-        <button type="button">
+        <button type="button" onClick={() => {play(episode)}}>
           <img src="/play.svg" alt="Play"/>
         </button>
       </div>
@@ -61,7 +70,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = data.map(episode => {
     return {
-      params: episode.id
+      params: {
+        slug:episode.id
+      }
     }
   })
 
